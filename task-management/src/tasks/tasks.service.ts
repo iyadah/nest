@@ -41,4 +41,9 @@ export class TasksService {
       return `"task doesn't exist to be deleted"`;
     }
   }
+  updateTaskStatus(id: string, status: TaskStatus): Task {
+    const task = this.getTaskById(id);
+    task.status = status;
+    return task;
+  }
 }
