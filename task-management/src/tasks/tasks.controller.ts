@@ -15,7 +15,7 @@ export class TasksController {
     return this.tasksService.getTaskById(id);
   }
   @Post()
-  createTask(@Body() createTaskDto: CreateTaskDto): Task {
-    return this.tasksService.createTask(createTaskDto);
+  createUpdateTask(@Body() createTaskDto: CreateTaskDto): Task {
+    return this.tasksService.createUpdateTask(createTaskDto);
   }
 }
