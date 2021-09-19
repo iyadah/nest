@@ -30,7 +30,15 @@ export class TasksService {
       };
       this.tasks.push(task);
     }
-
     return task;
+  }
+  deleteTask(id: string): string {
+    const taskIndex = this.tasks.findIndex((task) => task.id === id);
+    if (taskIndex >= 0) {
+      this.tasks.splice(taskIndex, 1);
+      return `"task deleted successfully"`;
+    } else {
+      return `"task doesn't exist to be deleted"`;
+    }
   }
 }
