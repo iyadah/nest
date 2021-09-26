@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -13,38 +14,38 @@ import {
 import { filter } from 'rxjs';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTaskFilterDto } from './dto/get-task-filter.dto';
-import { Task, TaskStatus } from './task.model';
+import { Task } from './task.entity';
 import { TasksService } from './tasks.service';
 
 @Controller('tasks')
 export class TasksController {
   constructor(private tasksService: TasksService) {}
-  @Get()
-  getTasks(@Query() filterDto: GetTaskFilterDto): Task[] {
-    if (Object.keys(filterDto).length) {
-      return this.tasksService.getTasksWithFilter(filterDto);
-    } else {
-      return this.tasksService.getAllTasks();
-    }
-  }
+  // @Get()
+  // getTasks(@Query() filterDto: GetTaskFilterDto): Task[] {
+  //   if (Object.keys(filterDto).length) {
+  //     return this.tasksService.getTasksWithFilter(filterDto);
+  //   } else {
+  //     return this.tasksService.getAllTasks();
+  //   }
+  // }
   @Get('/:id')
-  getTaskById(@Param('id') id: string): Task {
+  getTaskById(@Param('id', ParseIntPipe) id: number): Promise<Task> {
     return this.tasksService.getTaskById(id);
   }
-  @Post()
-  @UsePipes(ValidationPipe)
-  createUpdateTask(@Body() createTaskDto: CreateTaskDto): Task {
-    return this.tasksService.createUpdateTask(createTaskDto);
-  }
-  @Delete('/:id')
-  deleteTask(@Param('id') id: string): string {
-    return this.tasksService.deleteTask(id);
-  }
-  @Patch('/:id/status')
-  updateTaskStatus(
-    @Param('id') id: string,
-    @Body('status') status: TaskStatus,
-  ): Task {
-    return this.tasksService.updateTaskStatus(id, status);
-  }
+  // @Post()
+  // @UsePipes(ValidationPipe)
+  // createUpdateTask(@Body() createTaskDto: CreateTaskDto): Task {
+  //   return this.tasksService.createUpdateTask(createTaskDto);
+  // }
+  // @Delete('/:id')
+  // deleteTask(@Param('id') id: string): string {
+  //   return this.tasksService.deleteTask(id);
+  // }
+  // @Patch('/:id/status')
+  // updateTaskStatus(
+  //   @Param('id') id: string,
+  //   @Body('status') status: TaskStatus,
+  // ): Task {
+  //   return this.tasksService.updateTaskStatus(id, status);
+  // }
 }
