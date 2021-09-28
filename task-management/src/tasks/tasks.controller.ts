@@ -32,6 +32,11 @@ export class TasksController {
   getTaskById(@Param('id', ParseIntPipe) id: number): Promise<Task> {
     return this.tasksService.getTaskById(id);
   }
+
+  @Get('/')
+  getTasks(): Promise<Task []> {
+    return this.tasksService.getTasks();
+  }
   // @Post()
   // @UsePipes(ValidationPipe)
   // createUpdateTask(@Body() createTaskDto: CreateTaskDto): Task {

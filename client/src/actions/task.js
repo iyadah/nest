@@ -18,9 +18,9 @@ export const getTaskById = (taskId) => async (dispatch) => {
   }
 };
 
-export const getTasks = (taskId) => async (dispatch) => {
+export const getTasks = () => async (dispatch) => {
   try {
-    const res = await axios.get(`/tasks/`);
+    const res = await axios.get("http://localhost:3000/tasks/");
 
     dispatch({
       type: GET_TASKS,
