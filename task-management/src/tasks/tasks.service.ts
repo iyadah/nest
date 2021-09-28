@@ -44,6 +44,26 @@ export class TasksService {
     }
     return found;
   }
+  async createUpdateTask(createTaskDto: CreateTaskDto): Promise<Task> {
+    const { title, description, status } = createTaskDto;
+    let task= new Task();
+    const taskExists = await this.taskRepository.findOne({title: title})
+    if (taskExists) {
+      task.description = description;
+      task.status = status;
+      await this.taskRepository.save({
+        id: taskExists.id,
+        description: description,
+        status: status
+      });
+      return task;
+    } 
+    task.title = title;
+    task.description = description;
+    task.status = TaskStatus.OPEN;
+    await task.save();
+    return task;
+  }
   // getTaskById(id: string): Task {
   //   const found = this.tasks.find((task) => task.id === id);
   //   if (!found) {

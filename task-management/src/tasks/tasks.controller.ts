@@ -37,11 +37,11 @@ export class TasksController {
   getTasks(): Promise<Task []> {
     return this.tasksService.getTasks();
   }
-  // @Post()
-  // @UsePipes(ValidationPipe)
-  // createUpdateTask(@Body() createTaskDto: CreateTaskDto): Task {
-  //   return this.tasksService.createUpdateTask(createTaskDto);
-  // }
+  @Post()
+  @UsePipes(ValidationPipe)
+  createUpdateTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
+    return this.tasksService.createUpdateTask(createTaskDto);
+  }
   // @Delete('/:id')
   // deleteTask(@Param('id') id: string): string {
   //   return this.tasksService.deleteTask(id);
