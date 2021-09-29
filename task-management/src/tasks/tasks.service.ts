@@ -44,8 +44,19 @@ export class TasksService {
     }
     return found;
   }
+  async getTasksWithFilter(filterDto: GetTaskFilterDto): Promise<Task[]> {
+    const { status, search } = filterDto;
+    if (status) {
+      return await this.taskRepository.find({status:status});
+    }
+    if (search) {
+      return await this.taskRepository.find({title:`%${search}%`})
+    }
+    return [];
+  }
   async createUpdateTask(createTaskDto: CreateTaskDto): Promise<Task> {
     const { title, description, status } = createTaskDto;
+    console.log(createTaskDto);
     let task= new Task();
     const taskExists = await this.taskRepository.findOne({title: title})
     if (taskExists) {
@@ -64,44 +75,13 @@ export class TasksService {
     await task.save();
     return task;
   }
-  // getTaskById(id: string): Task {
-  //   const found = this.tasks.find((task) => task.id === id);
-  //   if (!found) {
-  //     throw new NotFoundException(`Task with id ${id} not found!`);
-  //   }
-  //   return found;
-  // }
-  // createUpdateTask(createTaskDto: CreateTaskDto): Task {
-  //   const { title, description } = createTaskDto;
-  //   let task: Task;
-  //   const taskIndex = this.tasks.findIndex((task) => task.title === title);
-  //   if (taskIndex >= 0) {
-  //     this.tasks[taskIndex].title = title;
-  //     this.tasks[taskIndex].description = description;
-  //     task = this.tasks[taskIndex];
-  //   } else {
-  //     task = {
-  //       id: uuidv4(),
-  //       title,
-  //       description,
-  //       status: TaskStatus.OPEN,
-  //     };
-  //     this.tasks.push(task);
-  //   }
-  //   return task;
-  // }
-  // deleteTask(id: string): string {
-  //   const taskIndex = this.tasks.findIndex((task) => task.id === id);
-  //   if (taskIndex >= 0) {
-  //     this.tasks.splice(taskIndex, 1);
-  //     return `"task deleted successfully"`;
-  //   } else {
-  //     throw new NotFoundException(`Task with ${id} does not exist!`);
-  //   }
-  // }
-  // updateTaskStatus(id: string, status: TaskStatus): Task {
-  //   const task = this.getTaskById(id);
-  //   task.status = status;
-  //   return task;
-  // }
+  async deleteTask(id: number): Promise<string> {
+    const taskExists = await this.taskRepository.findOne(id);
+    if (taskExists) {
+      this.taskRepository.delete(id);
+      return `"task deleted successfully"`;
+    } else {
+      throw new NotFoundException(`Task with ${id} does not exist!`);
+    }
+  }
 }

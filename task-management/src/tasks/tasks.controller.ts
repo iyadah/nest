@@ -37,15 +37,24 @@ export class TasksController {
   getTasks(): Promise<Task []> {
     return this.tasksService.getTasks();
   }
+  // @Get('/filter')
+  // getTasksFilter(@Query() filterDto: GetTaskFilterDto): Promise<string> {
+  //   return 'new Task';
+  //   // if (Object.keys(filterDto).length) {
+  //   //  // return this.tasksService.getTasksWithFilter(filterDto);
+  //   // } else {
+  //   // //  return this.tasksService.getTasks();
+  //   // }
+  // }
   @Post()
   @UsePipes(ValidationPipe)
   createUpdateTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
     return this.tasksService.createUpdateTask(createTaskDto);
   }
-  // @Delete('/:id')
-  // deleteTask(@Param('id') id: string): string {
-  //   return this.tasksService.deleteTask(id);
-  // }
+  @Delete('/:id')
+  deleteTask(@Param('id') id: number): Promise<string> {
+    return this.tasksService.deleteTask(id);
+  }
   // @Patch('/:id/status')
   // updateTaskStatus(
   //   @Param('id') id: string,
