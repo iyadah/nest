@@ -1,4 +1,4 @@
-import { TASK_ERROR, GET_TASK, GET_TASKS, ADD_TASK } from "../actions/types";
+import { TASK_ERROR, GET_TASK, GET_TASKS } from "../actions/types";
 
 const initialState = {
   task: null,
@@ -30,12 +30,7 @@ export default function (state = initialState, action) {
         error: payload,
         loading: false,
       };
-    case ADD_TASK:
-      return {
-        ...state,
-        error: payload,
-        loading: false,
-      };
+
     default:
       return state;
   }

@@ -3,23 +3,23 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { createUpdateTask, getTasks } from "../../actions/task";
 
-const Tasks = ({ getTasks, task: { tasks, loading } }) => {
+const Tasks = ({ getTasks, createUpdateTask, task: { tasks, loading } }) => {
   useEffect(() => {
     getTasks();
   }, [getTasks]);
-  console.log(tasks);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     status: "",
   });
+
   const { title = "", description = "", status = "" } = formData;
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = (e) => {
-    console.log(formData);
     e.preventDefault();
     createUpdateTask(formData);
+    getTasks();
   };
   return (
     <div>
@@ -57,9 +57,15 @@ const Tasks = ({ getTasks, task: { tasks, loading } }) => {
         <br />
         <br />
         <select name="status" value={status} onChange={(e) => onChange(e)}>
-          <option>OPEN</option>
-          <option>IN_PROGRESS</option>
-          <option>DONE</option>
+          <option value="OPEN" key="OPEN">
+            OPEN
+          </option>
+          <option value="IN_PROGRESS" key="IN_PROGRESS">
+            IN_PROGRESS
+          </option>
+          <option value="DONE" key="DONE">
+            DONE
+          </option>
         </select>{" "}
         status <br /> <br />
         <span> </span>
@@ -79,4 +85,4 @@ const mapStateToProps = (state) => ({
   task: state.task,
 });
 
-export default connect(mapStateToProps, { getTasks, createUpdateTask })(Tasks);
+export default connect(mapStateToProps, { createUpdateTask, getTasks })(Tasks);

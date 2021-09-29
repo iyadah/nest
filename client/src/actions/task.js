@@ -1,4 +1,4 @@
-import { TASK_ERROR, GET_TASK, GET_TASKS, ADD_TASK } from "./types";
+import { TASK_ERROR, GET_TASK, GET_TASKS } from "./types";
 import axios from "axios";
 
 // Get TASK by ID
@@ -21,7 +21,6 @@ export const getTaskById = (taskId) => async (dispatch) => {
 export const getTasks = () => async (dispatch) => {
   try {
     const res = await axios.get("http://localhost:3000/tasks/");
-
     dispatch({
       type: GET_TASKS,
       payload: res.data,
@@ -37,9 +36,8 @@ export const getTasks = () => async (dispatch) => {
 export const createUpdateTask = (formData) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:3000/tasks/", formData);
-    console.log(res);
     dispatch({
-      type: ADD_TASK,
+      type: GET_TASK,
       payload: res.data,
     });
   } catch (err) {
