@@ -17,7 +17,7 @@ const Tasks = ({ getTasks, createUpdateTask, task: { tasks, loading } }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     createUpdateTask(formData);
     getTasks();
   };

@@ -56,7 +56,6 @@ export class TasksService {
   }
   async createUpdateTask(createTaskDto: CreateTaskDto): Promise<Task> {
     const { title, description, status } = createTaskDto;
-    console.log(createTaskDto);
     let task= new Task();
     const taskExists = await this.taskRepository.findOne({title: title})
     if (taskExists) {
